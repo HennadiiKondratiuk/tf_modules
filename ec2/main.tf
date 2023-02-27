@@ -90,7 +90,7 @@ resource "aws_instance" "ec2_public" {
   subnet_id                   = "${var.public_subnet_ids}"
   associate_public_ip_address = true
   tags = {
-    "Name" = "Hkond-EC2-PUBLIC"
+    "Name" = "Hkond-${var.env}-PUBLIC"
   }
  
   # Copies the ssh key file to home dir
@@ -124,6 +124,6 @@ resource "aws_instance" "ec2_private" {
   subnet_id                   = "${var.private_subnet_ids}"
   associate_public_ip_address = false
   tags = {
-    "Name" = "Hkond-EC2-Private"
+    "Name" = "Hkond-${var.env}-Private"
   }
 }

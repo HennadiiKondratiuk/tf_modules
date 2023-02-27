@@ -15,6 +15,10 @@ variable "vpc_id" {
   type    = string
 }
 
+variable "env" {
+  type = string
+}
+
 variable "key_name_private" {
   default = "hkond-private-key"
   type = string
