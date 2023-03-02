@@ -22,7 +22,7 @@ resource "aws_security_group" "rds" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    cidr_blocks = "${var.access_ip}"
+    cidr_blocks = ["${var.access_ip}"]
   }
   egress {
     from_port   = 0
