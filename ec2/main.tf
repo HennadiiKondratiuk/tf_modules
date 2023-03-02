@@ -1,12 +1,3 @@
-//Data from network module
-data "terraform_remote_state" "network"{
-  backend = "s3"
-  config = {
-    bucket = "hkond-terraform-state-backend"
-    key = "network/terraform.tfstate"
-    region = "${var.region}"
-  }
-}
 // Generate the SSH keypair that we’ll use to configure the EC2 instance.
 // After that, write the private key to a local file and upload the public key to AWS
 resource "tls_private_key" "key" {
@@ -17,11 +8,7 @@ resource "local_file" "private_key" {
   sensitive_content = tls_private_key.key.private_key_pem
   file_permission   = "0400"
 }
-#resource "local_file" "public_key" {
-#  filename          = var.key_name
-#  sensitive_content = tls_private_key.key.public_key_openssh
-#  file_permission   = "0400"
-#}
+
 resource "aws_key_pair" "key_pair" {
   key_name   = var.key_name_private
   public_key = tls_private_key.key.public_key_openssh
@@ -93,27 +80,6 @@ resource "aws_instance" "ec2_public" {
     "Name" = "Hkond-${var.env}-PUBLIC"
   }
  
-  # Copies the ssh key file to home dir
-  #provisioner "file" {
-  #  source      = "./${var.key_name}"
-  #  destination = "/home/ec2-user/${var.key_name}.pem"
-  #  connection {
-  #    type        = "ssh"
-  #    user        = "ec2-user"
-  #    private_key = file("${var.key_name_private}")#local_file.private_key.filename 
-  #    host        = self.public_ip
-  #  }
-  #}
-  //chmod key 400 on EC2 instance
-  #provisioner "remote-exec" {
-  #  inline = ["chmod 400 ~/${var.key_name}.pem"]
-  #  connection {
-  #    type        = "ssh"
-  #    user        = "ec2-user"
-  #   private_key = file("${var.key_name_private}")#local_file.private_key.filename#file("${var.key_name}.pem")
-  #   host        = self.public_ip
-  # }
-  #
 }
 #Create a new EC2 launch configuration
 resource "aws_instance" "ec2_private" {
