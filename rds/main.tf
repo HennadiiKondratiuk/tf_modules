@@ -9,13 +9,13 @@ resource "aws_subnet" "rds" {
 }
 
 resource "aws_db_subnet_group" "rds-default" {
-  name        = "${var.rds_instance_identifier}-subnet-group"
+  name        = "${var.rds_instance_identifier}-${var.env}-subnet-group"
   description = "Terraform example RDS subnet group"
   subnet_ids  = "${aws_subnet.rds.*.id}"
 }
 
 resource "aws_security_group" "rds" {
-  name        = "hkond-terraform_rds_sg"
+  name        = "hkond-terraform_rds_sg-${var.env}"
   description = "Terraform example RDS MySQL server"
   vpc_id      = "${var.vpc_id}"
   ingress {
@@ -41,7 +41,7 @@ resource "aws_db_instance" "rds-instance" {
   engine                    = "${var.engine}"
   engine_version            = "${var.engine_version}"
   instance_class            = "${var.instance_class}"
-  db_name                      = "${var.database_name}"
+  db_name                   = "${var.database_name}-${var.env}"
   username                  = "${var.database_user}"
   password                  = "${var.database_password}"
   db_subnet_group_name      = "${aws_db_subnet_group.rds-default.id}"

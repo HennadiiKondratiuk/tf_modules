@@ -37,3 +37,6 @@ variable "database_password" {
 variable "database_user" {
   sensitive   = true
 }
+variable "env" {
+  type = string
+}
