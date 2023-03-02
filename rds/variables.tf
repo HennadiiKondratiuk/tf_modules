@@ -12,6 +12,12 @@ variable "engine_version" {
   default = "8.0.28"
 }
 
+variable "access_ip" {
+  default     = "0.0.0.0/0"
+  description = "access to db, default from anywhere"
+  type        = string
+}
+
 variable "instance_class" {
   type = string
   default = "db.t2.micro"
