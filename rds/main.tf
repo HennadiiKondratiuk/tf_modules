@@ -41,7 +41,7 @@ resource "aws_db_instance" "rds-instance" {
   engine                    = "${var.engine}"
   engine_version            = "${var.engine_version}"
   instance_class            = "${var.instance_class}"
-  db_name                   = "${var.database_name}-${var.env}"
+  db_name                   = "${var.database_name}"
   username                  = "${var.database_user}"
   password                  = "${var.database_password}"
   db_subnet_group_name      = "${aws_db_subnet_group.rds-default.id}"
@@ -52,7 +52,7 @@ resource "aws_db_instance" "rds-instance" {
 
 resource "aws_db_parameter_group" "rds-parameter-group" {
   name        = "${var.rds_instance_identifier}-param-group"
-  family      = "mysql8"
+  family      = "mysql8.0"
   parameter {
     name  = "character_set_server"
     value = "utf8"
