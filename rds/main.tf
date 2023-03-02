@@ -52,8 +52,7 @@ resource "aws_db_instance" "rds-instance" {
 
 resource "aws_db_parameter_group" "rds-parameter-group" {
   name        = "${var.rds_instance_identifier}-param-group"
-  description = "Terraform example parameter group for mysql5.6"
-  family      = "mysql5.6"
+  family      = "mysql8"
   parameter {
     name  = "character_set_server"
     value = "utf8"

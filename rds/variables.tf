@@ -29,7 +29,6 @@ variable "allocated_storage" {
 }
 variable "rds_instance_identifier" {}
 variable "database_name" {
-  sensitive   = true
 }
 variable "database_password" {
   sensitive   = true
