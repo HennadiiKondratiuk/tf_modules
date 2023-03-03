@@ -1,17 +1,3 @@
-#----------------------------------------------------------
-# My Terraform
-# Provision:
-#  - VPC
-#  - Internet Gateway
-#  - XX Public Subnets
-#  - XX Private Subnets
-#  - XX NAT Gateways in Public Subnets to give access to Internet from Private Subnets
-#
-# Made by HK
-#----------------------------------------------------------
-
-#==============================================================
-
 data "aws_availability_zones" "available" {}
 
 resource "aws_vpc" "main" {

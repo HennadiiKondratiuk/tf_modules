@@ -14,8 +14,7 @@ resource "aws_key_pair" "key_pair" {
   public_key = tls_private_key.key.public_key_openssh
 }
 
-# Create Security Group for the Bastion Host 
-# terraform aws create security group
+
 resource "aws_security_group" "ssh-security-group" {
   name        = "SSH Security Group"
   description = "Enable SSH access on Port 22"
@@ -38,7 +37,7 @@ resource "aws_security_group" "ssh-security-group" {
   }
 }
 # Create Security Group for the Web Server
-# terraform aws create security group
+
 resource "aws_security_group" "webserver-security-group" {
   name        = "Web Server Security Group"
   description = "Enable HTTP access on Port 80 and SSH access on Port 22 via SSH SG"
