@@ -11,7 +11,7 @@ data "aws_availability_zones" "available" {}
 resource "aws_db_subnet_group" "rds-default" {
   name        = "${var.rds_instance_identifier}-${var.env}-subnet-group"
   description = "Terraform example RDS subnet group"
-  subnet_ids  = "${var.private_subnet_ids.[*].id}"
+  subnet_ids  = ["${var.private_subnet_ids}","${var.public_subnet_ids}"]
 }
 
 resource "aws_security_group" "rds" {
