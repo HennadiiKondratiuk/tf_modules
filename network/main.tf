@@ -49,7 +49,7 @@ resource "aws_route_table_association" "public_routes" {
 
 
 resource "aws_eip" "nat" {
-  count = length(var.private_subnet_cidrs)
+  count = var.nat ? length(var.private_subnet_cidrs) : 0
   vpc   = true
   tags = {
     Name = "${var.env}-nat-gw-${count.index + 1}"
@@ -57,7 +57,7 @@ resource "aws_eip" "nat" {
 }
 
 resource "aws_nat_gateway" "nat" {
-  count         = length(var.private_subnet_cidrs)
+  count         = var.nat ? length(var.private_subnet_cidrs) : 0
   allocation_id = aws_eip.nat[count.index].id
   subnet_id     = element(aws_subnet.public_subnets[*].id, count.index)
   tags = {
