@@ -83,7 +83,7 @@ resource "aws_route_table" "private_subnets" {
   vpc_id = aws_vpc.main.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = var.nat ? aws_nat_gateway.nat[count.index].id : null
+    #gateway_id = var.nat ? aws_nat_gateway.nat[count.index].id : null
   }
   tags = {
     Name = "${var.env}-route-private-subnet-${count.index + 1}"
