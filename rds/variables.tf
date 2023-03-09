@@ -28,8 +28,7 @@ variable "allocated_storage" {
   default = "5"
 }
 variable "rds_instance_identifier" {}
-variable "database_name" {
-}
+variable "database_name" {}
 variable "database_password" {
   sensitive   = true
 }
