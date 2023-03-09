@@ -36,7 +36,7 @@ resource "random_string" "rds_password" {
 
 // Store Password in SSM Parameter Store
 resource "aws_ssm_parameter" "rds_password" {
-  name        = "hkond-${var.env}/rds-mysql"
+  name        = "/hkond-${var.env}/rds-mysql"
   description = "Master Password for RDS MySQL"
   type        = "SecureString"
   value       = random_string.rds_password.result
