@@ -67,9 +67,33 @@ resource "aws_security_group" "webserver-security-group" {
   }
 }
 
+data "aws_ami" "amzlinux" {
+  most_recent      = true
+  owners           = ["137112412989"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-kernel-5.10-hvm-*-x86_64-gp2"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+}
 #Create a new EC2 launch configuration
 resource "aws_instance" "ec2_public" {
-  ami                         = "ami-0eb7496c2e0403237"
+  ami                         = "data.aws_ami.amzlinux.id"
   instance_type               = var.instance_type
   key_name                    = aws_key_pair.key_pair.key_name
   security_groups             = ["${aws_security_group.ssh-security-group.id}"]
