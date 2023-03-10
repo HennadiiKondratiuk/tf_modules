@@ -93,7 +93,7 @@ data "aws_ami" "amzlinux" {
 }
 #Create a new EC2 launch configuration
 resource "aws_instance" "ec2_public" {
-  ami                         = "data.aws_ami.amzlinux.id"
+  ami                         = data.aws_ami.amzlinux.id
   instance_type               = var.instance_type
   key_name                    = aws_key_pair.key_pair.key_name
   security_groups             = ["${aws_security_group.ssh-security-group.id}"]
