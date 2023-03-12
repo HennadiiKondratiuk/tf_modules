@@ -33,3 +33,15 @@ variable "protocol_sg"{
     default = "tcp"
     type = string
 }
+
+variable "public_sub_ec2"{
+    default = false
+}
+
+variable "public_ip"{
+    default = false
+}
+
+variable "ec2_number"{
+    default = 1
+}

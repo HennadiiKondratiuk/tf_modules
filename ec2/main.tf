@@ -15,7 +15,7 @@ resource "aws_key_pair" "key_pair" {
 }
 
 
-resource "aws_security_group" "ssh-security-group" {
+resource "aws_security_group" "security-group" {
   name        = "hkond-${var.env}-sg"
   vpc_id      = "${var.vpc_id}"
 
@@ -62,27 +62,16 @@ data "aws_ami" "amzlinux" {
   }
 }
 #Create a new EC2 launch configuration
-resource "aws_instance" "ec2_public" {
+resource "aws_instance" "ec2" {
+  count                       = var.ec2_number
   ami                         = data.aws_ami.amzlinux.id
   instance_type               = var.instance_type
   key_name                    = aws_key_pair.key_pair.key_name
-  security_groups             = ["${aws_security_group.ssh-security-group.id}"]
-  subnet_id                   = "${var.public_subnet_ids}"
-  associate_public_ip_address = true
+  security_groups             = ["${aws_security_group.security-group.id}"]
+  subnet_id                   = var.public_sub_ec2 ? "${var.public_subnet_ids}" : "${var.private_subnet_ids}"
+  associate_public_ip_address = var.public_ip
   tags = {
-    "Name" = "Hkond-${var.env}-PUBLIC"
+    "Name" = var.public_sub_ec2 ? "Hkond-${var.env}-PUBLIC" : "Hkond-${var.env}-PRIVATE"
   }
  
-}
-#Create a new EC2 launch configuration
-resource "aws_instance" "ec2_private" {
-  ami                         = "ami-0eb7496c2e0403237"
-  instance_type               = var.instance_type
-  key_name                    = aws_key_pair.key_pair.key_name
-  security_groups             = ["${aws_security_group.webserver-security-group.id}"]
-  subnet_id                   = "${var.private_subnet_ids}"
-  associate_public_ip_address = false
-  tags = {
-    "Name" = "Hkond-${var.env}-Private"
-  }
 }
