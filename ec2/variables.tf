@@ -28,3 +28,8 @@ variable "private_subnet_ids" {
 }
 variable "public_subnet_ids" {
 }
+
+variable "protocol_sg"{
+    default = "tcp"
+    type = string
+}

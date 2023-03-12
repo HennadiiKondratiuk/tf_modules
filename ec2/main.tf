@@ -24,7 +24,7 @@ resource "aws_security_group" "ssh-security-group" {
     content{
       from_port   = ingress.value
       to_port     = ingress.value
-      protocol    = "tcp"
+      protocol    = "${var.protocol_sg}"
       cidr_blocks = ["${var.cidr_block_sg}"]
     }
   }
