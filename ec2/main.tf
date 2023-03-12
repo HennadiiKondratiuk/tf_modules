@@ -21,7 +21,7 @@ resource "aws_security_group" "security-group" {
 
   dynamic "ingress" {
     for_each = ${var.ports}
-    content{
+    content {
       from_port   = ingress.value
       to_port     = ingress.value
       protocol    = "${var.protocol_sg}"
@@ -73,5 +73,5 @@ resource "aws_instance" "ec2" {
   tags = {
     "Name" = var.public_sub_ec2 ? "Hkond-${var.env}-PUBLIC" : "Hkond-${var.env}-PRIVATE"
   }
- 
+
 }
