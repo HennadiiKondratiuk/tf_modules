@@ -16,54 +16,24 @@ resource "aws_key_pair" "key_pair" {
 
 
 resource "aws_security_group" "ssh-security-group" {
-  name        = "SSH Security Group"
-  description = "Enable SSH access on Port 22"
+  name        = "hkond-${var.env}-sg"
   vpc_id      = "${var.vpc_id}"
-  ingress {
-    description = "SSH Access"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["${var.ssh-location}"]
-  }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "Hkond SSH Security Group"
-  }
-}
-# Create Security Group for the Web Server
 
-resource "aws_security_group" "webserver-security-group" {
-  name        = "Web Server Security Group"
-  description = "Enable HTTP access on Port 80 and SSH access on Port 22 via SSH SG"
-  vpc_id      = "${var.vpc_id}"
-  ingress {
-    description     = "SSH Access"
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = ["${aws_security_group.ssh-security-group.id}"]
+  dynamic "ingress" {
+    for_each = ${var.ports}
+    content{
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["${var.cidr_block_sg}"]
+    }
   }
-  ingress {
-    description     = "WEB Access"
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "Hkond Web Server Security Group"
   }
 }
 

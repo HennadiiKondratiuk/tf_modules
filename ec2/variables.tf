@@ -1,14 +1,12 @@
-variable "ssh-location" {
-  default     = "0.0.0.0/0"
-  description = "SSH variable for bastion host"
-  type        = string
+variable "cidr_block_sg" {
+  default     = ["0.0.0.0/0"]
+  type        = list
 }
 variable "instance_type" {
   type    = string
   default = "t2.micro"
 }
 variable "region" {
-  default = "eu-central-1"
   type    = string
 }
 variable "vpc_id" {
@@ -19,6 +17,9 @@ variable "env" {
   type = string
 }
 
+variable "ports" {
+    type = list
+}
 variable "key_name_private" {
   default = "hkond-private-key"
   type = string
