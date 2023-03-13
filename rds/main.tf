@@ -59,13 +59,13 @@ resource "aws_db_instance" "rds-instance" {
 
 resource "aws_db_parameter_group" "rds-parameter-group" {
   name        = "${var.rds_instance_identifier}-param-group"
-  family      = "mysql8.0"
+  family      = var.family
   parameter {
     name  = "character_set_server"
-    value = "utf8"
+    value = var.param_val
   }
   parameter {
     name  = "character_set_client"
-    value = "utf8"
+    value = var.param_val
   }
 }

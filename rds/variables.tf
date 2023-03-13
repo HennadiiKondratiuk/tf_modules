@@ -39,3 +39,11 @@ variable "env" {
 variable "private_subnet_ids" {
   type = list(string)
 }
+variable "family" {
+  type = string
+  default = "mysql8.0"
+}
+variable "param_val" {
+  type = string
+  default = "utf8"
+}
