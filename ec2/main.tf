@@ -25,7 +25,7 @@ resource "aws_security_group" "security-group" {
       from_port   = ingress.value
       to_port     = ingress.value
       protocol    = "${var.protocol_sg}"
-      cidr_blocks = ["${var.cidr_block_sg}"]
+      cidr_blocks = "${var.cidr_block_sg}"
     }
   }
 
